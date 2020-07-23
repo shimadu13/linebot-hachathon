@@ -1,0 +1,25 @@
+service:
+  name: line-bot-api-shimadu # 一意な値である必要があるので名前などを追加しておいてください
+plugins:
+  - serverless-webpack
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: ap-northeast-1
+  # profile: xxx # AWSのアクセスキー登録で`~/.aws/credentials`に[default]以外の名前で登録した場合はここで設定します
+  environment: 
+    CHANNEL_ACCESS_TOKEN:  # アクセストークンを設定する
+functions:
+  hello: # Lambdaの関数名
+    handler: handler.hello # ファイル名.エクスポート名
+    # HTTPエンドポイントを作成するAPI Gatewayの設定
+    events:
+      - http:
+          method: get
+          path: hello
+  reply:
+    handler: handler.reply
+    events:
+      - http:
+          method: post
+          path: reply
